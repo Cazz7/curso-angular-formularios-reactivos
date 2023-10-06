@@ -2,7 +2,7 @@
 <hr>
 
 
-<form autocomplete="off">
+<form [formGroup]="myForm" (ngSubmit)="onSave()" autocomplete="off">
 
     <!-- Radio -->
     <div class="row mb-3">
@@ -11,9 +11,11 @@
 
             <div class="form-check">
                 <input class="form-check-input"
+                       formControlName="gender"
                        type="radio"
                        value="M"
                        id="radioMasculino">
+                       <!-- [checked]="true"> -->
                 <label class="form-check-label" for="radioMasculino">
                   Masculino
                 </label>
@@ -21,6 +23,7 @@
 
             <div class="form-check">
                 <input class="form-check-input"
+                       formControlName="gender"
                        type="radio"
                        value="F"
                        id="radioFemenino">
@@ -39,6 +42,7 @@
 
             <div class="form-check form-switch mt-2">
                 <input class="form-check-input"
+                       formControlName="wantNotifications"
                        type="checkbox"
                        id="flexSwitchCheckChecked">
                 <label class="form-check-label" for="flexSwitchCheckChecked">Quiero recibir notificaciones</label>
@@ -53,14 +57,16 @@
         <div class="col-sm-9">
             <div class="form-check">
                 <input class="form-check-input"
+                       formControlName="termsAndConditions"
                        type="checkbox"
                        id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">
                   Términos y condiciones de uso
                 </label>
               </div>
-              <span class="form-text text-danger">
-                 Debe de aceptar las condiciones de uso
+              <span *ngIf="isValidField('termsAndConditions')" class="form-text text-danger">
+                <!-- {{ getFieldError('termAndConditions') }} -->
+                Debe aceptar terminos y condiciones
               </span>
 
         </div>
@@ -81,7 +87,7 @@
 
 
 <h5>Valor del formulario</h5>
-<pre>{{ 'object' | json }}</pre>
+<pre>{{ myForm.value | json }}</pre>
 <br>
 
 <h5>Persona</h5>
@@ -89,7 +95,10 @@
 <br>
 
 <h5>Valid</h5>
-<pre>{{ 'object' | json }}</pre>
+<pre>{{ myForm.valid| json }}</pre>
+
+<span>Touched</span>
+<pre>{{ myForm.touched | json }}</pre>
 
 <!-- <h5>Términos</h5> -->
 <!-- <pre>{{ myForm.controls?.terminos?.errors | json }}</pre> -->

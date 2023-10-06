@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { ValidatorsService } from 'src/app/shared/service/validators.service';
 
 const rtx5090 = {
   name: 'RTX 5090',
@@ -29,7 +30,8 @@ export class BasicPageComponent implements OnInit {
     inStorage:[0,[Validators.required, Validators.min(0)]]
   })
 
-  constructor( private fb: FormBuilder ){}
+  constructor( private fb: FormBuilder, private validatorsService: ValidatorsService ){}
+
   ngOnInit(): void {
     // Si requiero por ejemplo algun valor que viene de afuera
     //this.myForm.reset(rtx5090);
@@ -37,27 +39,14 @@ export class BasicPageComponent implements OnInit {
 
   isValidField(field: string): boolean | null {
 
-    return this.myForm.controls[field].errors
-            && this.myForm.controls[field].touched;
+    return this.validatorsService.isValidField( this.myForm, field );
 
   }
 
   getFieldError(field: string):string | null{
 
-    if(!this.myForm.controls[field]  ) return null; // Para ver si existe el campo
+    return this.validatorsService.getFieldError( this.myForm, field );
 
-    // Si el errors viene nulo, entonces retorna un objeto vacío
-    // tambien se pudo hacer poniendo la validacion && this.myForm.controls[field].errors
-    const errors = this.myForm.controls[field].errors || {};
-    // para recorrer los errores
-    for(const key of Object.keys(errors)){
-      switch(key){
-        case 'required': return 'Este campo es requerido';
-        case 'minlength': return `Mínimo ${errors['minlength'].requiredLength} caracteres.`;
-        }
-    }
-
-    return null;
   }
 
   onSave():void{
