@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 //import { cantBeStrider } from 'src/app/shared/validators/validators.functions';
-// Mejor asi
+// Esta es otra forma para no poner tantos.
 //import * as customValidators from 'src/app/shared/validators/validators.functions';
 import { ValidatorsService } from '../../../shared/service/validators.service';
 import { EmailValidator } from 'src/app/shared/validators/email-validator.service';
